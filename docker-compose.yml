@@ -43,6 +43,7 @@ services:
     environment:
       TZ: 'Europe/Zurich'
       WEBPASSWORD: '96XBd4S6!eREoN&J'
+      PIHOLE_DNS: 1.1.1.1
     volumes:
       - 'pihole:/etc/pihole'
       - 'pihole-dnsmasq:/etc/dnsmasq.d'
@@ -53,16 +54,16 @@ services:
       timeout: 5s
       retries: 5
 
-  pihole-exporter:
-    image: ekofr/pihole-exporter:latest
-    container_name: pihole-exporter
-    environment:
-      PIHOLE_HOSTNAME: pihole
-      PIHOLE_PASSWORD: 96XBd4S6!eREoN&J
-      PORT: 9617
-    depends_on:
-      pihole:
-        condition: service_healthy
+#  pihole-exporter:
+#    image: ekofr/pihole-exporter:latest
+#    container_name: pihole-exporter
+#    environment:
+#      PIHOLE_HOSTNAME: pihole
+#      PIHOLE_PASSWORD: 96XBd4S6!eREoN&J
+#      PORT: 9617
+#    depends_on:
+#      pihole:
+#        condition: service_healthy
 
   postgres:
     image: postgres:latest
