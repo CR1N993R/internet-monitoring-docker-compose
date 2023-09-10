@@ -34,12 +34,15 @@ services:
       context: .
       dockerfile: blackbox-exporter.Dockerfile
     container_name: blackbox-exporter
+    restart: unless-stopped
 
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
     ports:
       - "80:80/tcp"
+      - "53:53/tcp"
+      - "53:53/udp"
     environment:
       TZ: 'Europe/Zurich'
       WEBPASSWORD: '96XBd4S6!eREoN&J'
@@ -81,6 +84,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   grafana-postgres-service:
     image: cr1n993r/webhook-postgres-service
@@ -94,6 +98,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   grafana-storage:
