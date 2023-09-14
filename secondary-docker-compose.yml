@@ -1,0 +1,29 @@
+version: '1'
+
+services:
+  prometheus:
+    build:
+      context: .
+      dockerfile: prometheus.Dockerfile
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus:/prometheus
+    restart: unless-stopped
+
+  speedtest-exporter:
+    image: miguelndecarvalho/speedtest-exporter
+    container_name: speedtest-exporter
+    restart: unless-stopped
+
+  blackbox-exporter:
+    build:
+      context: .
+      dockerfile: blackbox-exporter.Dockerfile
+    container_name: blackbox-exporter
+    restart: unless-stopped
+
+volumes:
+  prometheus:
+    driver: local
