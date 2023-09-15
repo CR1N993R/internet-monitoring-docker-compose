@@ -1,21 +1,12 @@
 version: '1'
 
 services:
-  prometheus:
-    build:
-      context: .
-      dockerfile: prometheus.Dockerfile
-    container_name: prometheus
-    ports:
-      - 9090:9090
-    volumes:
-      - prometheus:/prometheus
-    restart: unless-stopped
-
   speedtest-exporter:
     image: miguelndecarvalho/speedtest-exporter
     container_name: speedtest-exporter
     restart: unless-stopped
+    ports:
+      - '9798:9798'
 
   blackbox-exporter:
     build:
@@ -23,7 +14,5 @@ services:
       dockerfile: blackbox-exporter.Dockerfile
     container_name: blackbox-exporter
     restart: unless-stopped
-
-volumes:
-  prometheus:
-    driver: local
+    ports:
+      - '9115:9115'
